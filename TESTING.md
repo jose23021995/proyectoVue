@@ -91,7 +91,7 @@ Emarket/
 
 ## Server Testing
 
-### Setup
+### Setup (Server)
 
 The server uses Jest for testing with the following configuration:
 
@@ -109,7 +109,7 @@ npm run test:watch         # Watch mode
 npm run test:coverage      # With coverage
 ```
 
-### Test Categories
+### Test Categories (Server)
 
 #### 1. Controller Tests (`tests/controllers/`)
 
@@ -120,7 +120,7 @@ npm run test:coverage      # With coverage
 
 - **api.test.js**: Full API workflow tests including authentication and product management
 
-### Key Features Tested
+### Key Features Tested (Server)
 
 - ✅ Product CRUD operations
 - ✅ User registration and login
@@ -132,7 +132,7 @@ npm run test:coverage      # With coverage
 
 ## Shop Testing
 
-### Setup
+### Setup (Shop)
 
 The shop uses Jest and Vue Test Utils for unit testing, and Playwright for e2e testing:
 
@@ -149,7 +149,7 @@ npm run test:unit          # Unit tests
 npm run test:e2e           # E2E tests
 ```
 
-### Test Categories
+### Test Categories (Shop)
 
 #### 1. Component Tests (`tests/components/`)
 
@@ -171,7 +171,7 @@ npm run test:e2e           # E2E tests
 
 - **user-flow.spec.js**: Complete user journey tests
 
-### Key Features Tested
+### Key Features Tested (Shop)
 
 - ✅ Vue component rendering and behavior
 - ✅ Vuex store mutations and actions

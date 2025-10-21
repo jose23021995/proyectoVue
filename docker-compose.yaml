@@ -1,0 +1,52 @@
+services:
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    env_file:
+      - .env
+    networks: 
+      - emarket
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    networks: 
+      - emarket
+    ports:
+      - "8081:8081"
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+
+  shop:
+    build:
+      context: ./shop
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    networks: 
+      - emarket
+    ports:
+      - "8080:8080"
+    depends_on:
+      - server
+
+volumes:
+  db_data:
+
+networks:
+  emarket:
+    name: emarket
+    driver: bridge

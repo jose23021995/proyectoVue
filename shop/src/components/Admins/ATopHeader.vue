@@ -2,7 +2,7 @@
   <div>
     <b-navbar toggleable="md" type="dark" variant="info">
       <b-navbar-brand href="/">
-        <img :src="companyLogo" />
+        <img :src="companyLogo" alt="Logo" />
       </b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>

@@ -49,6 +49,7 @@
     "prettier": "^2.8.8",
     "sass-loader": "^13.2.2",
     "selenium": "^2.20.0",
+    "selenium-webdriver": "^4.37.0",
     "vue-template-compiler": "^2.6.12"
   }
 }

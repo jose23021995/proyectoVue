@@ -6,3 +6,6 @@ dist
 # testing
 server/coverage
 shop/coverage
+
+# vim swap files
+*.swp

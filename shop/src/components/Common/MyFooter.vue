@@ -26,7 +26,7 @@
         </b-col>
       </b-row>
       <hr />
-      <h5>© 2023, All rights reserved</h5>
+      <h5>© 2025, All rights reserved</h5>
     </b-container>
   </div>
 </template>

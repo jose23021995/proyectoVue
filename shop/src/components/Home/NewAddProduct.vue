@@ -80,7 +80,7 @@ export default {
       cartComponentKey: 0,
       wishlistKey: 2,
       newAddLimit: 4,
-      newAddViewTitle: "New Collection 2023",
+      newAddViewTitle: "New Collection 2025",
     };
   },
   async mounted() {

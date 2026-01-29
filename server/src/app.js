@@ -1,36 +1,75 @@
-console.log("server started")
-if(process.env.NODE_ENV !== 'production'){
-	require('dotenv').config({path: "./.env"})
+console.log("Servidor iniciado...");
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config({ path: './.env' });
 }
-const express = require("express")
-const cors = require("cors")
-const morgan = require("morgan")
-const config = require("./config/config")
-const { sequelize } = require("./models")
+
+const express = require('express');
+const cors = require('cors');
+const morgan = require('morgan');
+const helmet = require('helmet');
+const { sequelize } = require('./models');
+const config = require('./config/config');
 const app = express();
-app.use(morgan("combined"));
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-app.use(cors());
+
+// Middlewares globales
+app.use(helmet()); // Headers de seguridad
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors()); // En producción podrías restringir: cors({ origin: 'https://midominio.com' })
+
+// Logs
+if (process.env.NODE_ENV === 'production') {
+  app.use(morgan('combined'));
+} else {
+  app.use(morgan('dev'));
+}
+
+// Archivos estáticos
 app.use('/public', express.static('public'));
 
-require('./passport')
-require("./routes")(app)
+// Configuración Passport
+require('./passport');
 
-// Catch all for 404
-app.use((req, res, next) => {
-  res.status(404).send({ error: 'Not found' });
+// Rutas
+require('./routes')(app);
+
+// Ruta de prueba
+app.get('/', (req, res) => {
+  res.send({ message: '¡Servidor funcionando correctamente!' });
 });
 
-// In test environment, export the app without starting the server
-if (process.env.NODE_ENV !== 'test') {
-  sequelize.authenticate()
-    .then(() => {
-      app.listen(config.port, () => console.log(`Express server running on port ${config.port}`));
-    })
-    .catch(err => {
-      console.error('Unable to connect to the database:', err);
-    });
-}
+// Catch-all 404
+app.use((req, res) => {
+  res.status(404).json({ error: 'Not found' });
+});
 
-module.exports = app
+// Manejo de errores global
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Internal Server Error' });
+});
+
+// Conexión a la base de datos y arranque del servidor
+const startServer = async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('Conectado a MySQL.');
+
+    await sequelize.sync({ alter: true });
+    console.log('Tablas creadas / actualizadas.');
+
+    if (process.env.NODE_ENV !== 'test') {
+      app.listen(config.port, () => {
+        console.log(`Servidor Express corriendo en el puerto ${config.port}`);
+      });
+    }
+  } catch (err) {
+    console.error('No se pudo conectar a la base de datos:', err);
+    process.exit(1); // Termina el proceso si falla la DB
+  }
+};
+
+startServer();
+
+module.exports = app; // Para testing con Jest/Supertest

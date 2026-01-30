@@ -23,7 +23,7 @@
     </b-container>
     <div v-if="!validParam">
       <InvalidParameter
-        paramName="order"
+        paramName="order1"
         pageToNavigate="Orders Page"
         routerLink="/admin/orders"
       />

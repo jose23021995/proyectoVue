@@ -142,7 +142,11 @@ export default {
         this.$store.dispatch("CurrentUser/setToken", response.token);
         this.$store.dispatch("CurrentUser/setUser", response.user);
         this.$store.dispatch("Wishlist/setWishlist");
-        this.$router.push({ path: "/" });
+        if (response.user.userType === "admin") {
+          this.$router.push({ path: "/admin" });
+        } else {
+          this.$router.push({ path: "/" });
+        }
       } catch (error) {
         this.loginAlert = true;
         this.loginMessage = error.response.data.error;

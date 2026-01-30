@@ -1,6 +1,8 @@
+//importaciones de vue y vue-router
 import Vue from "vue";
 import store from "@/store";
 import VueRouter from "vue-router";
+//estas son las rutas de la aplicacion
 import Home from "@/views/Home.vue";
 import AllProducts from "@/views/Product/AllProducts.vue";
 import CategoryProducts from "@/views/Product/CategoryProducts.vue";
@@ -28,8 +30,10 @@ import AddProduct from "@/views/Admin/AddProduct.vue";
 import Unauthorized from "@/views/ErrorPage/Unauthorized.vue";
 import NotFound from "@/views/ErrorPage/NotFound.vue";
 
+//usamos vue-router
 Vue.use(VueRouter);
 
+//estas son las rutas de la aplicacion
 const routes = [
   {
     path: "/",
@@ -195,17 +199,21 @@ const router = new VueRouter({
   routes,
 });
 
+// antes de cada ruta, se verifica si el usuario es admin
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title;
+
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
-  const admin = store.state.CurrentUser.admin;
-  if (requiresAuth && !admin) {
+  const user = store.state.CurrentUser.user;
+
+  const isAdmin = user && user.userType === "Admin";
+
+  if (requiresAuth && !isAdmin) {
     next("/error/401");
-  } else if (requiresAuth && admin) {
-    next();
   } else {
     next();
   }
 });
 
+//exportamos el router
 export default router;

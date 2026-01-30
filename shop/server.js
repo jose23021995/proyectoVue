@@ -5,8 +5,16 @@ const enforce = require("express-sslify");
 
 const app = express();
 
-app.use(serveStatic(__dirname + "/dist"));
-app.use(history());
-app.use(enforce.HTTPS({ trustProtoHeader: true }));
+const PORT = process.env.PORT || 5000;
 
-app.listen(process.env.PORT || 5000);
+// SOLO forzar HTTPS en producción
+if (process.env.NODE_ENV === "production") {
+  app.use(enforce.HTTPS({ trustProtoHeader: true }));
+}
+
+app.use(history());
+app.use(serveStatic(__dirname + "/dist"));
+
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en puerto ${PORT}`);
+});

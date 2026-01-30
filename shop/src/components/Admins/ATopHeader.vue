@@ -16,6 +16,9 @@
           <b-nav-item to="/admin/orders" class="ml-2">
             <div style="color: #fff; font-size: 18px">Orders</div>
           </b-nav-item>
+          <b-nav-item to="/admin/add-product" class="ml-2">
+            <div style="color: #fff; font-size: 18px">Product</div>
+          </b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
           <b-nav-item>

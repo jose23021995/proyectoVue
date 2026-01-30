@@ -10,7 +10,7 @@
     "test:watch": "DB_NAME=emarket_test NODE_ENV=test jest --runInBand --watch",
     "test:coverage": "DB_NAME=emarket_test NODE_ENV=test jest --runInBand --coverage",
     "seed": "node ./seed"
-  },
+    },
   "author": "",
   "license": "ISC",
   "dependencies": {
